@@ -4,14 +4,15 @@ var URL = window.URL || window.webkitURL;
 
 module.exports = function(content, url, options) {
   try {
+    console.log(url, options);
 
     if (options.type === 'base64') {
       return new Worker(content);
     } else {
       return getWorkerFromBlob(content);
     }
-
   } catch (e) {
+    console.log('Error:', e);
     if (!url) {
       throw Error('Inline worker is not supported');
     }

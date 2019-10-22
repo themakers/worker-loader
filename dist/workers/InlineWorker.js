@@ -6,6 +6,7 @@ var URL = window.URL || window.webkitURL;
 
 module.exports = function (content, url, options) {
   try {
+    console.log(options);
 
     if (options.type === 'base64') {
       return new Worker(content);
