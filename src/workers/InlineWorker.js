@@ -2,32 +2,15 @@
 
 var URL = window.URL || window.webkitURL;
 
-module.exports = function (content, url) {
+module.exports = function(content, url, options) {
   try {
-    try {
-      var blob;
 
-      try {
-        // BlobBuilder = Deprecated, but widely implemented
-        var BlobBuilder = window.BlobBuilder ||
-        window.WebKitBlobBuilder ||
-        window.MozBlobBuilder ||
-        window.MSBlobBuilder;
-
-        blob = new BlobBuilder();
-
-        blob.append(content);
-
-        blob = blob.getBlob();
-      } catch (e) {
-        // The proposed API
-        blob = new Blob([content]);
-      }
-
-      return new Worker(URL.createObjectURL(blob));
-    } catch (e) {
-      return new Worker('data:application/javascript,' + encodeURIComponent(content));
+    if (options.type === 'base64') {
+      return new Worker(content);
+    } else {
+      return getWorkerFromBlob(content);
     }
+
   } catch (e) {
     if (!url) {
       throw Error('Inline worker is not supported');
@@ -36,3 +19,30 @@ module.exports = function (content, url) {
     return new Worker(url);
   }
 };
+
+function getWorkerFromBlob(content) {
+  try {
+    var blob;
+
+    try {
+      // BlobBuilder = Deprecated, but widely implemented
+      var BlobBuilder = window.BlobBuilder ||
+        window.WebKitBlobBuilder ||
+        window.MozBlobBuilder ||
+        window.MSBlobBuilder;
+
+      blob = new BlobBuilder();
+
+      blob.append(content);
+
+      blob = blob.getBlob();
+    } catch (e) {
+      // The proposed API
+      blob = new Blob([content]);
+    }
+
+    return new Worker(URL.createObjectURL(blob));
+  } catch (e) {
+    return new Worker('data:application/javascript,' + encodeURIComponent(content));
+  }
+}

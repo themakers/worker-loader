@@ -43,6 +43,7 @@
   },
   "dependencies": {
     "@webpack-contrib/schema-utils": "^1.0.0-beta.0",
+    "datauri": "^2.0.0",
     "loader-utils": "^1.0.0"
   },
   "devDependencies": {

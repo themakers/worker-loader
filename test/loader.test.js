@@ -198,7 +198,7 @@ test('should use the publicPath option as the base URL if specified', () =>
       target,
       loader: {
         options: {
-          inline: true,
+          inline: 'base64',
           fallback: false,
         },
       },
