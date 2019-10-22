@@ -1,0 +1,21 @@
+{
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "inline": {
+      "type": [
+        "boolean",
+        "string"
+      ]
+    },
+    "fallback": {
+      "type": "boolean"
+    },
+    "publicPath": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": false
+}
